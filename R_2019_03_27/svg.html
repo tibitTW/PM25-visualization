@@ -14,12 +14,14 @@
             .attr('height', 800)
 
         d3.csv('test1.csv', function(data) {
-
+            
             d3.select('svg').append('circle')
-                .attr('cx', data.x * 100)
-                .attr('cy', data.y * 100)
+                .attr('cx', data.x)
+                .attr('cy', data.y)
                 .attr('r', data.value)
-                .attr('fill', 'red')
+                .attr('fill', function() {
+                    return 'hsl(240, 100%, ' + (data.value*2-20) + '%'
+                })
 
             d3.select('svg').append('text')
                 .attr('x', data.x * 100)
