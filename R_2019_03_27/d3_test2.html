@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+    <script>
+
+        var arr = []
+        for (var i = 0; i < 100; i++) {
+            arr_s = []
+            arr_s.push(Math.random()*1200 | 0)
+            arr_s.push(Math.random()*800 | 0)
+            value = Math.random()
+            arr_s.push(Math.sqrt(value * 800 | 0))
+            arr_s.push(value * 100)
+            arr.push(arr_s)
+        }
+        console.log(arr)
+        d3.select('body').append('svg')
+            .attr('width', 1200)
+            .attr('height', 800)
+
+        d3.select('body svg').selectAll('circle')
+            .data(arr)
+            .enter().append('circle')
+            .attr('cx', function(d) {
+                return d[0]
+            })
+            .attr('cy', function(d) {
+                return d[1]
+            })
+            .attr('r', function(d) {
+                return d[2]
+            })
+            .attr('fill', function(d) {
+                return 'hsl(360, 100%,' + d[3]  + '%)'
+            })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    <script>
+        d3.select('body').append('svg')
+            .attr('width', 1200)
+            .attr('height', 800)
+
+        d3.csv('test1.csv', function(data) {
+
+            d3.select('svg').append('circle')
+                .attr('cx', data.x * 100)
+                .attr('cy', data.y * 100)
+                .attr('r', data.value)
+                .attr('fill', 'red')
+
+            d3.select('svg').append('text')
+                .attr('x', data.x * 100)
+                .attr('y', data.y * 100)
+                .attr('fill', 'black')
+                .text(data.value)
+            d3.select('body svg').selectAll('circle')
+                .data(data).append()
+                .attr('cx', 50)
+                .attr('cy', 50)
+                // .attr('', )
+                // .attr('', )
+
+
+
+
+        })
+        // d3.csv('test1.csv', function(data) {
+        //     for (var index in data.x) {
+        //         console.log(+data.x[index])
+        //     }
+        //     // console.log(+data.x)
+        //     arr.push(+data.x[index])
+        //     // console.log(typeof(d3.keys(data)))
+        //     // // console.log(d3.keys(data))
+        //     // console.log(typeof(d3.values(data)))
+        //     // // console.log(d3.values(data))
+        //     // console.log(typeof(d3.entries(data)))
+        //     // console.log(d3.entries(data))
+        // })
+        // console.log(arr)
+    </script>
+</body>
+</html>
