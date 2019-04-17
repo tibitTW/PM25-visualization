@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+        get_date = (month, date) => {
+            var result = date
+            switch (month) {
+                case 1: break;
+                case 2: result += 31;  break;
+                case 3: result += 59;  break;
+                case 4: result += 90;  break;
+                case 5: result += 120;  break;
+                case 6: result += 151;  break;
+                case 7: result += 181;  break;
+                case 8: result += 212;  break;
+                case 9: result += 243;  break;
+                case 10: result += 273;  break;
+                case 11: result += 304;  break;
+                case 12: result += 334;  break;
+            }
+            return result
+        }
+
+        var svgWidth = 1200, svgHeight = 800
+
+        svg = d3.select('body').append('svg')
+            .attr('width', svgWidth)
+            .attr('height', svgHeight)
+
+        var xScale = d3.scaleLinear()
+            .domain([1, 366])
+            .range([0, svgWidth])
+        var yScale = d3.scaleLinear()
+            .domain([0, 100])
+            .range([0, svgHeight])
+        var colorScale = d3.scaleLinear()
+            .domain([0, 70])
+            .range([115, 0])
+
+        mean_arr = []
+        d3.csv('data.csv', function (data) {
+
+            if (data['測項'] == 'PM2.5') {
+                var arr = []
+                for (var i = 0; i < 24; i++) {
+                    var id = i.toString().length - 1 ? i.toString() : '0' + i.toString()
+                    arr.push(data[id])
+                }
+                var mean1 = d3.mean(arr)
+                mean_arr.push(d3.mean(arr))
+                // d3.select('body').append('p')
+                //     .text(data['日期'] + ' : ' + d3.mean(arr))
+
+                // new part
+                var date = data['日期'].split('/')
+                // console.log(get_date(+date[1], +date[2]), d3.mean(arr))
+                // console.log(date)
+
+                svg.append('rect')
+                    .attr('width', 1200/365)
+                    .attr('height', yScale(mean1))
+                    .attr('transform', 'translate(' + xScale(get_date(+date[1], +date[2])) + ',' + (800 - yScale(mean1)) + ')')
+                    .attr('fill', 'hsl(' + colorScale(mean1) + ', 100%, 50%)')
+
+            }
+        })
+        // failed and unfixed
+        console.log(mean_arr)
+
+    </script>
+</body>
+
+</html>
